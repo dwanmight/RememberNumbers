@@ -18,6 +18,8 @@ import com.junior.dwan.remembernumbers.utils.ContsantsManager;
 import com.junior.dwan.remembernumbers.utils.GameUtils;
 import com.junior.dwan.remembernumbers.utils.RandomNumbers;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -139,7 +141,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void waitTime() {
         try {
-            java.util.concurrent.TimeUnit.SECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
