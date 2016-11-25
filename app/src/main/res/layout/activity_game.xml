@@ -22,8 +22,16 @@
             android:scaleType="fitXY"
             android:src="@drawable/cloud1"/>
         <TextView android:id="@+id/tv_score"
+                  android:layout_gravity="top|left"
+                  android:layout_marginLeft="56dp"
                   style="@style/textView_score"
                   android:hint="@string/score"/>
+        <TextView android:id="@+id/tv_life"
+                  style="@style/textView_score"
+                  android:layout_gravity="top|right"
+                  android:layout_marginRight="56dp"
+
+                  android:hint="Life :  "/>
         <TextView android:id="@+id/tv_question"
                   style="@style/cloud_textView"
                   android:hint="@string/tap_to_start"/>

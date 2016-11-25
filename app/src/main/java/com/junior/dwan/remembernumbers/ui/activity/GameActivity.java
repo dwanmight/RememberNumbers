@@ -1,5 +1,6 @@
 package com.junior.dwan.remembernumbers.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,10 +37,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button mBtnok;
     @BindView(R.id.tv_score)
     TextView mTvScore;
+    @BindView(R.id.tv_life)
+    TextView mTvLife;
 
     private RandomNumbers mRandomNumbers;
     private DataManager mDataManager;
     private int mScore;
+    private int mLife;
     private Handler mHandler;
 
     @Override
@@ -47,11 +51,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         ButterKnife.bind(this);
-        mScore = 0;
         mDataManager = DataManager.get(this);
-        mBtnClear.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
-        mBtnok.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
-        mTextAnswer.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
+        mScore = mDataManager.getScore();
+        mLife = mDataManager.getLife();
+        showScore(ContsantsManager.SHOW_SCORE);
+        showScore(ContsantsManager.SHOW_LIFE);
+        setTypeFaces();
+        setListener();
+        initNumberButtons();
         mRandomNumbers = new RandomNumbers();
         mHandler = new Handler() {
             @Override
@@ -71,11 +78,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
         mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
+    }
 
+    private void setTypeFaces() {
+        mBtnClear.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
+        mBtnok.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
+        mTextAnswer.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
+    }
+
+    private void setListener() {
         mTextQuestion.setOnClickListener(this);
         mBtnClear.setOnClickListener(this);
         mBtnok.setOnClickListener(this);
-        initNumberButtons();
     }
 
     private void initNumberButtons() {
@@ -113,15 +127,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i("TAGTAG", mDataManager.getQuestion() + " result");
                 if (result.equals(mDataManager.getQuestion())) {
                     mScore = GameUtils.checkResults(true, mScore);
-                    showScore(mScore);
+                    showScore(ContsantsManager.SHOW_SCORE);
                     mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
                     Log.i("TAGTAG", mDataManager.getQuestion() + " true");
                 } else {
-                    showScore(mScore);
                     mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
+                    if(GameUtils.checkForGameOver(mLife)){
+                        mLife = GameUtils.checkLife(true, mLife);
+                    } else {
+                        startFinishActivity();
+                    }
+                    showScore(ContsantsManager.SHOW_LIFE);
                     Log.i("TAGTAG", mDataManager.getQuestion() + " false");
                 }
         }
+    }
+
+    private void startFinishActivity() {
+        Intent startFinishIntent=new Intent(this, GameFinishActivity.class);
+        startFinishIntent.putExtra(ContsantsManager.EXTRA_SCORE,mScore);
+        startActivity(startFinishIntent);
     }
 
     View.OnClickListener numberButtonListener = new View.OnClickListener() {
@@ -147,7 +172,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void showScore(Integer mScore) {
-        mTvScore.setText("Score : " + String.valueOf(mScore));
+    private void showScore(int value) {
+        switch (value) {
+            case ContsantsManager.SHOW_SCORE:
+                mTvScore.setText("Score : " + String.valueOf(mScore));
+                break;
+            case ContsantsManager.SHOW_LIFE:
+                mTvLife.setText("Life : " + String.valueOf(mLife));
+        }
     }
+
+
 }

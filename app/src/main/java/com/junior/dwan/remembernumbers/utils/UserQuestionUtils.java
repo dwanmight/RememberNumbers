@@ -8,13 +8,16 @@ public class UserQuestionUtils {
     private String mTextQuestion;
 
     private int mScore;
+    private int mLife;
 
     public UserQuestionUtils() {
+        mLife=3;
+        mScore=0;
     }
 
 
     public void setTextQuestion(int textQuestion) {
-        mTextQuestion = textQuestion+"";
+        mTextQuestion = textQuestion + "";
     }
 
     public String getTextQuestion() {
@@ -28,6 +31,14 @@ public class UserQuestionUtils {
 
     public void setScore(int score) {
         mScore = score;
+    }
+
+    public int getLife() {
+        return mLife;
+    }
+
+    public void setLife(int life) {
+        mLife = life;
     }
 
 }

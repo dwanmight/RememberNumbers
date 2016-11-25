@@ -1,7 +1,6 @@
 package com.junior.dwan.remembernumbers.data.managers;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.junior.dwan.remembernumbers.utils.UserQuestionUtils;
 
@@ -17,39 +16,43 @@ public class DataManager {
     UserQuestionUtils mUserQuestionUtils;
 
     private DataManager(Context context) {
-        this.mUserQuestionUtils=new UserQuestionUtils();
-        this.mContext=context;
-        this.mPreferencesManager=new PreferencesManager();
+        this.mUserQuestionUtils = new UserQuestionUtils();
+        this.mContext = context;
+        this.mPreferencesManager = new PreferencesManager();
     }
 
-    public static DataManager get(Context c){
-        if(sDataManager==null){
-            sDataManager=new DataManager(c.getApplicationContext());
+    public static DataManager get(Context c) {
+        if (sDataManager == null) {
+            sDataManager = new DataManager(c.getApplicationContext());
         }
         return sDataManager;
     }
 
-    public PreferencesManager getPreferencesManager(){
+    public PreferencesManager getPreferencesManager() {
         return mPreferencesManager;
     }
 
-    public void setQuestion(int question){
+    public void setQuestion(int question) {
         mUserQuestionUtils.setTextQuestion(question);
     }
 
-    public String getQuestion(){
+    public String getQuestion() {
         return mUserQuestionUtils.getTextQuestion();
     }
 
-    public void setScore(int score){
+    public void setScore(int score) {
         mUserQuestionUtils.setScore(score);
     }
 
-    public int getScore(){
+    public int getScore() {
         return mUserQuestionUtils.getScore();
     }
 
+    public void setLife(int life) {
+        mUserQuestionUtils.setLife(life);
+    }
 
-
-
+    public int getLife() {
+        return mUserQuestionUtils.getLife();
+    }
 }

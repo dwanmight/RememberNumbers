@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class GameUtils {
 
-    public static void streamNumbersPanel(TextView tvAnswer,View v) {
+    public static void streamNumbersPanel(TextView tvAnswer, View v) {
         TextView textView = (TextView) v;
         String working = tvAnswer.getText().toString();
         String text = textView.getText().toString();
@@ -19,10 +19,24 @@ public class GameUtils {
             tvAnswer.setText(working + text);
     }
 
-    public static int checkResults(boolean result,int score){
-        if(result){
+    public static int checkResults(boolean result, int score) {
+        if (result) {
             score++;
         }
         return score;
+    }
+
+    public static int checkLife(boolean result, int life) {
+        if (result) {
+            life--;
+        }
+        return life;
+    }
+
+    public static boolean checkForGameOver(int life) {
+        if (life >= 0) {
+            return true;
+        } else
+            return false;
     }
 }
