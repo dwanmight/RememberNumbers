@@ -7,7 +7,7 @@ import android.widget.TextView;
  * Created by Might on 25.11.2016.
  */
 
-public class NumberUtils {
+public class GameUtils {
 
     public static void streamNumbersPanel(TextView tvAnswer,View v) {
         TextView textView = (TextView) v;
@@ -17,5 +17,12 @@ public class NumberUtils {
             tvAnswer.setText(text);
         } else
             tvAnswer.setText(working + text);
+    }
+
+    public static int checkResults(boolean result,int score){
+        if(result){
+            score++;
+        }
+        return score;
     }
 }
