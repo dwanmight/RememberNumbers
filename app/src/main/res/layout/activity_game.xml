@@ -23,13 +23,13 @@
             android:src="@drawable/cloud1"/>
         <TextView android:id="@+id/tv_score"
                   style="@style/textView_score"
-                  android:hint="Score:"/>
+                  android:hint="@string/score"/>
         <TextView android:id="@+id/tv_question"
                   style="@style/cloud_textView"
-                  android:hint="Tap to start"/>
+                  android:hint="@string/tap_to_start"/>
         <TextView android:id="@+id/tv_answer"
                   style="@style/cloud_textView"
-                  android:hint="Enter you number"
+                  android:hint="@string/enter_you_number"
                   android:visibility="gone"/>
 
     </FrameLayout>
@@ -39,11 +39,11 @@
         <Button android:id="@+id/btnClear"
                 style="@style/btn_clear_and_ok"
                 android:layout_alignParentLeft="true"
-                android:text="Clear"/>
+                android:text="@string/clear"/>
         <Button android:id="@+id/btnOk"
                 style="@style/btn_clear_and_ok"
                 android:layout_alignParentRight="true"
-                android:text="Ok"/>
+                android:text="@string/ok"/>
         <ImageView
             android:id="@+id/man1_main"
             android:layout_width="300dp"
