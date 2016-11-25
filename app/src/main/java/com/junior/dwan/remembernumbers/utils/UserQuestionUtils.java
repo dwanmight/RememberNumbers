@@ -4,10 +4,12 @@ package com.junior.dwan.remembernumbers.utils;
  * Created by Might on 04.11.2016.
  */
 
-public class Question {
+public class UserQuestionUtils {
     private String mTextQuestion;
 
-    public Question() {
+    private int mScore;
+
+    public UserQuestionUtils() {
     }
 
 
@@ -20,9 +22,12 @@ public class Question {
         return mTextQuestion;
     }
 
-//    public String toString() {
-//
-//        return mTextQuestion+"";
-//    }
+    public int getScore() {
+        return mScore;
+    }
+
+    public void setScore(int score) {
+        mScore = score;
+    }
 
 }
