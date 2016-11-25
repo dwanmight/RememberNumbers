@@ -18,13 +18,13 @@ import android.widget.Toast;
 import com.junior.dwan.remembernumbers.R;
 import com.junior.dwan.remembernumbers.data.managers.DataManager;
 import com.junior.dwan.remembernumbers.utils.ContsantsManager;
-import com.junior.dwan.remembernumbers.utils.UserQuestionUtils;
+import com.junior.dwan.remembernumbers.utils.NumberUtils;
 import com.junior.dwan.remembernumbers.utils.RandomNumbers;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     RandomNumbers mRandomNumbers;
     @BindView(R.id.table_layout)
     TableLayout mTableLayout;
@@ -38,6 +38,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button mBtnok;
 
     DataManager mDataManager;
+    int mScore;
     private Handler mHandler;
 
     @Override
@@ -59,6 +60,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         mTextAnswer.setVisibility(View.VISIBLE);
                         break;
                     case ContsantsManager.STATUS_VISIBLE:
+                        mTextQuestion.setVisibility(View.VISIBLE);
+                        mTextAnswer.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -68,10 +71,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mTextQuestion.setOnClickListener(this);
         mBtnClear.setOnClickListener(this);
         mBtnok.setOnClickListener(this);
-        initButtons();
+        initNumberButtons();
     }
 
-    private void initButtons() {
+    private void initNumberButtons() {
         int number = 0;
         for (int i = 0; i < mTableLayout.getChildCount(); i++) {
             TableRow row = (TableRow) mTableLayout.getChildAt(i);
@@ -97,7 +100,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 mTextAnswer.setText("");
                 Thread t = new Thread(mRunnable);
                 t.start();
-
                 break;
             case R.id.btnClear:
                 mTextAnswer.setText("");
@@ -112,33 +114,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(getBaseContext(), "Incorrect", Toast.LENGTH_SHORT).show();
                     Log.i("TAGTAG", mDataManager.getQuestion() + " false");
                 }
-
         }
-
-
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        String correctAnswer = mDataManager.getQuestion();
-        if (s.toString().equals(correctAnswer))
-            Toast.makeText(this, "correct toast", Toast.LENGTH_SHORT).show();
-        else Toast.makeText(this, "incorrect", Toast.LENGTH_SHORT).show();
     }
 
     View.OnClickListener numberButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            NumberUtils.streamNumbersPanel(mTextAnswer,v);
         }
     };
 
@@ -147,17 +129,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         public void run() {
             waitTime();
             mHandler.sendEmptyMessage(ContsantsManager.STATUS_HIDE);
-
         }
     };
 
     private void waitTime() {
-
         try {
             java.util.concurrent.TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }
