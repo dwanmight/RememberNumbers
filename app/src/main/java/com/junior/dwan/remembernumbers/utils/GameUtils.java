@@ -34,7 +34,7 @@ public class GameUtils {
     }
 
     public static boolean checkForGameOver(int life) {
-        if (life >= 0) {
+        if (life > 0) {
             return true;
         } else
             return false;

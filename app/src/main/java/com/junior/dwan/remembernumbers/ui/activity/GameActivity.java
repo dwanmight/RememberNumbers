@@ -134,10 +134,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
                     if(GameUtils.checkForGameOver(mLife)){
                         mLife = GameUtils.checkLife(true, mLife);
+                        showScore(ContsantsManager.SHOW_LIFE);
                     } else {
                         startFinishActivity();
                     }
-                    showScore(ContsantsManager.SHOW_LIFE);
                     Log.i("TAGTAG", mDataManager.getQuestion() + " false");
                 }
         }

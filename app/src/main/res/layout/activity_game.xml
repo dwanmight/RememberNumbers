@@ -22,16 +22,15 @@
             android:scaleType="fitXY"
             android:src="@drawable/cloud1"/>
         <TextView android:id="@+id/tv_score"
+                  style="@style/textView_score"
                   android:layout_gravity="top|left"
                   android:layout_marginLeft="56dp"
-                  style="@style/textView_score"
                   android:hint="@string/score"/>
         <TextView android:id="@+id/tv_life"
                   style="@style/textView_score"
                   android:layout_gravity="top|right"
                   android:layout_marginRight="56dp"
-
-                  android:hint="Life :  "/>
+                  android:hint="@string/life"/>
         <TextView android:id="@+id/tv_question"
                   style="@style/cloud_textView"
                   android:hint="@string/tap_to_start"/>
@@ -39,7 +38,6 @@
                   style="@style/cloud_textView"
                   android:hint="@string/enter_you_number"
                   android:visibility="gone"/>
-
     </FrameLayout>
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="0dp"
