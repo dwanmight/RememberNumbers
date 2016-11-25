@@ -8,6 +8,7 @@
     android:background="@drawable/pineapplecut"
     android:orientation="vertical"
     android:paddingTop="16dp"
+    android:weightSum="8"
     tools:context="com.junior.dwan.remembernumbers.ui.activity.GameActivity">
     <FrameLayout android:layout_width="match_parent"
                  android:layout_height="0dp"
@@ -20,41 +21,31 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:src="@drawable/cloud1"/>
-        <TextView android:id="@+id/tv_number"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="center"
-                  android:layout_marginBottom="16dp"
-                  android:fontFamily="sans-serif-smallcaps"
-                  android:gravity="center"
-                  android:text="12345678"
-                  android:textColor="#000000"
-                  android:textSize="30sp"
-                  android:textStyle="bold"/>
+        <TextView android:id="@+id/tv_question"
+                  style="@style/cloud_textView"
+                  android:hint="Tap to start"/>
+        <TextView android:id="@+id/tv_answer"
+                  style="@style/cloud_textView"
+                  android:hint="Enter you number"
+                  android:visibility="gone"/>
 
     </FrameLayout>
-
-    <ImageView
-        android:id="@+id/man1_main"
-        android:layout_width="300dp"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:src="@drawable/man1"/>
-    <EditText
-        android:id="@+id/et_numberAnswer"
-        style="?attr/textAppearanceListItem"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"
-        android:fontFamily="sans-serif-condensed"
-        android:gravity="center"
-        android:hint="Enter you answer here"
-        android:inputType="number"
-        android:singleLine="true"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5">
+        <Button android:id="@+id/btnClear"
+                style="@style/btn_clear_and_ok"
+                android:layout_alignParentLeft="true"
+                android:text="Clear"/>
+        <Button android:id="@+id/btnOk"
+                style="@style/btn_clear_and_ok"
+                android:layout_alignParentRight="true"
+                android:text="Ok"/>
+        <ImageView
+            android:id="@+id/man1_main"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/man1"/>
+    </RelativeLayout>
+    <include layout="@layout/in_number_button"/>
 </LinearLayout>
