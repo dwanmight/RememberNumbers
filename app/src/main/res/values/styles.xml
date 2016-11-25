@@ -40,5 +40,14 @@
         <item name="android:layout_margin">16dp</item>
         <item name="android:background">@drawable/button_action_background</item>
     </style>
+    <style name="textView_score" parent="cloud_textView">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_gravity">top|center</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
 
 </resources>
