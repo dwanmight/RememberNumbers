@@ -5,20 +5,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.junior.dwan.remembernumbers.R;
 import com.junior.dwan.remembernumbers.data.managers.DataManager;
 import com.junior.dwan.remembernumbers.utils.ContsantsManager;
-import com.junior.dwan.remembernumbers.utils.NumberUtils;
+import com.junior.dwan.remembernumbers.utils.GameUtils;
 import com.junior.dwan.remembernumbers.utils.RandomNumbers;
 
 import butterknife.BindView;
@@ -35,11 +32,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button mBtnClear;
     @BindView(R.id.btnOk)
     Button mBtnok;
-    @BindView(R.id.tv_score) TextView mTvScore;
+    @BindView(R.id.tv_score)
+    TextView mTvScore;
 
     private RandomNumbers mRandomNumbers;
     private DataManager mDataManager;
-    int mScore;
+    private int mScore;
     private Handler mHandler;
 
     @Override
@@ -47,7 +45,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         ButterKnife.bind(this);
-        mDataManager=DataManager.get(this);
+        mScore = 0;
+        mDataManager = DataManager.get(this);
         mBtnClear.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
         mBtnok.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
         mTextAnswer.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
@@ -63,6 +62,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     case ContsantsManager.STATUS_VISIBLE:
                         mTextQuestion.setVisibility(View.VISIBLE);
                         mTextAnswer.setVisibility(View.GONE);
+                        mTextQuestion.setText("");
+                        mTextQuestion.setHint(getResources().getString(R.string.tap_to_start));
                         break;
                 }
             }
@@ -109,10 +110,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 String result = mTextAnswer.getText().toString();
                 Log.i("TAGTAG", mDataManager.getQuestion() + " result");
                 if (result.equals(mDataManager.getQuestion())) {
-                    Toast.makeText(getBaseContext(), "Correct", Toast.LENGTH_SHORT).show();
+                    mScore = GameUtils.checkResults(true, mScore);
+                    showScore(mScore);
+                    mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
                     Log.i("TAGTAG", mDataManager.getQuestion() + " true");
                 } else {
-                    Toast.makeText(getBaseContext(), "Incorrect", Toast.LENGTH_SHORT).show();
+                    showScore(mScore);
+                    mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
                     Log.i("TAGTAG", mDataManager.getQuestion() + " false");
                 }
         }
@@ -121,7 +125,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     View.OnClickListener numberButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            NumberUtils.streamNumbersPanel(mTextAnswer,v);
+            GameUtils.streamNumbersPanel(mTextAnswer, v);
         }
     };
 
@@ -139,5 +143,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showScore(Integer mScore) {
+        mTvScore.setText("Score : " + String.valueOf(mScore));
     }
 }
