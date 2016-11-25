@@ -1,5 +1,6 @@
 package com.junior.dwan.remembernumbers.ui.activity;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -34,6 +35,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         ButterKnife.bind(this);
+        mBtnClear.setTypeface(Typeface.createFromAsset(getAssets(),"op.ttf"));
+        mBtnok.setTypeface(Typeface.createFromAsset(getAssets(),"op.ttf"));
+        mTextAnswer.setTypeface(Typeface.createFromAsset(getAssets(),"op.ttf"));
         mRandomNumbers = new RandomNumbers();
         mQuestion = new Question();
 
@@ -50,6 +54,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             for(int j=0;j<row.getChildCount();j++){
                 Button btn=(Button)row.getChildAt(j);
                 btn.setText(number+"");
+                btn.setTypeface(Typeface.createFromAsset(getAssets(),"op.ttf"));
                 number++;
                 btn.setOnClickListener(numberButtonListener);
 
