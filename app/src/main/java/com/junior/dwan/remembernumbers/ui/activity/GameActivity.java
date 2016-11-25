@@ -25,7 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    RandomNumbers mRandomNumbers;
     @BindView(R.id.table_layout)
     TableLayout mTableLayout;
     @BindView(R.id.tv_question)
@@ -36,8 +35,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button mBtnClear;
     @BindView(R.id.btnOk)
     Button mBtnok;
+    @BindView(R.id.tv_score) TextView mTvScore;
 
-    DataManager mDataManager;
+    private RandomNumbers mRandomNumbers;
+    private DataManager mDataManager;
     int mScore;
     private Handler mHandler;
 
