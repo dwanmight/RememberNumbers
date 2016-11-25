@@ -21,6 +21,9 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:src="@drawable/cloud1"/>
+        <TextView android:id="@+id/tv_score"
+                  style="@style/textView_score"
+                  android:hint="Score:"/>
         <TextView android:id="@+id/tv_question"
                   style="@style/cloud_textView"
                   android:hint="Tap to start"/>
