@@ -112,7 +112,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initNumberButtons() {
-        int number = 0;
+        int number = 1;
         mListNumberButtons = new ArrayList<>();
         for (int i = 0; i < mTableLayout.getChildCount(); i++) {
             TableRow row = (TableRow) mTableLayout.getChildAt(i);
@@ -123,9 +123,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 mListNumberButtons.add(btn);
                 number++;
                 btn.setOnClickListener(numberButtonListener);
-
             }
         }
+        //init button number = 0
+        int lastIndex = mTableLayout.getChildCount() - 1;
+        TableRow row = (TableRow) mTableLayout.getChildAt(lastIndex);
+        int indexRowLastEl = row.getChildCount() - 1;
+        Button btn = (Button) row.getChildAt(indexRowLastEl);
+        btn.setText("0");
+        btn.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
+        mListNumberButtons.add(btn);
+        btn.setOnClickListener(numberButtonListener);
     }
 
     @Override
