@@ -260,22 +260,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             mTextAnswer.setVisibility(View.VISIBLE);
             mBtnok.setEnabled(true);
             mBtnClear.setEnabled(true);
-            mTableLayout.setEnabled(true);
-            if (mListNumberButtons.size() > 0) {
-                for (Button btnNumber : mListNumberButtons)
-                    btnNumber.setEnabled(true);
-            }
+//            mTableLayout.setEnabled(true);
+//            if (mListNumberButtons.size() > 0) {
+//                for (Button btnNumber : mListNumberButtons)
+//                    btnNumber.setEnabled(true);
+//            }
         } else {
             mTextQuestion.setVisibility(View.VISIBLE);
             mTextAnswer.setVisibility(View.GONE);
             mTextQuestion.setText("");
             mBtnok.setEnabled(false);
             mBtnClear.setEnabled(false);
-            mTableLayout.setEnabled(false);
-            if (mListNumberButtons.size() > 0) {
-                for (Button btnNumber : mListNumberButtons)
-                    btnNumber.setEnabled(false);
-            }
+//            mTableLayout.setEnabled(false);
+//            if (mListNumberButtons.size() > 0) {
+//                for (Button btnNumber : mListNumberButtons)
+//                    btnNumber.setEnabled(false);
+//            }
         }
     }
 
