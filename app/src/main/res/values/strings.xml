@@ -7,4 +7,6 @@
     <string name="ok">Ok</string>
     <string name="life">Life :</string>
     <string name="tap_to_start_text">Tap to start!</string>
+    <string name="score_is">Your score : %1$s</string>
+    <string name="highscore_is">Highscore : %1$s</string>
 </resources>
