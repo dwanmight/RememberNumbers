@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.junior.dwan.remembernumbers.R;
 import com.junior.dwan.remembernumbers.data.managers.DataManager;
-import com.junior.dwan.remembernumbers.utils.ContsantsManager;
+import com.junior.dwan.remembernumbers.utils.ConstantsManager;
 import com.junior.dwan.remembernumbers.utils.GameUtils;
 import com.junior.dwan.remembernumbers.utils.RandomNumbers;
 
@@ -67,8 +67,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mDataManager = DataManager.get(this);
         mScore = mDataManager.getScore();
         mLife = mDataManager.getLife();
-        showScore(ContsantsManager.SHOW_SCORE);
-        showScore(ContsantsManager.SHOW_LIFE);
+        showScore(ConstantsManager.SHOW_SCORE);
+        showScore(ConstantsManager.SHOW_LIFE);
         setTypeFacesAndListener();
         initNumberButtons();
         initStartGame();
@@ -83,14 +83,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case ContsantsManager.STATUS_HIDE:
+                    case ConstantsManager.STATUS_HIDE:
                         isEnterModeEnabled(true);
                         break;
-                    case ContsantsManager.STATUS_VISIBLE:
+                    case ConstantsManager.STATUS_VISIBLE:
                         isEnterModeEnabled(false);
                         updateQuestion();
                         break;
-                    case ContsantsManager.STATUS_FON_DEFAULT:
+                    case ConstantsManager.STATUS_FON_DEFAULT:
                         mFoneLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 }
             }
@@ -158,20 +158,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             if (result.equals(mDataManager.getQuestion())) {
                 mFoneLayout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
                 mScore = GameUtils.checkResults(true, mScore);
-                showScore(ContsantsManager.SHOW_SCORE);
+                showScore(ConstantsManager.SHOW_SCORE);
                 Log.i("TAGTAG", mDataManager.getQuestion() + " true");
-                mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
+                mHandler.sendEmptyMessage(ConstantsManager.STATUS_VISIBLE);
 
             } else {
                 if (GameUtils.checkForGameOver(mLife)) {
                     mFoneLayout.setBackgroundColor(getResources().getColor(R.color.colorRed));
                     mLife = GameUtils.checkLife(true, mLife);
-                    showScore(ContsantsManager.SHOW_LIFE);
+                    showScore(ConstantsManager.SHOW_LIFE);
                 } else {
                     startFinishActivity();
                     finish();
                 }
-                mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
+                mHandler.sendEmptyMessage(ConstantsManager.STATUS_VISIBLE);
                 Log.i("TAGTAG", mDataManager.getQuestion() + " false");
             }
             Thread thread = new Thread(mChangeFonRunnable);
@@ -193,7 +193,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startFinishActivity() {
         Intent startFinishIntent = new Intent(this, GameFinishActivity.class);
-        startFinishIntent.putExtra(ContsantsManager.EXTRA_SCORE, mScore);
+        startFinishIntent.putExtra(ConstantsManager.EXTRA_SCORE, mScore);
         startActivity(startFinishIntent);
     }
 
@@ -208,7 +208,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void run() {
             waitTime(1000);
-            mHandler.sendEmptyMessage(ContsantsManager.STATUS_HIDE);
+            mHandler.sendEmptyMessage(ConstantsManager.STATUS_HIDE);
         }
     };
 
@@ -216,7 +216,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void run() {
             waitTime(300);
-            mHandler.sendEmptyMessage(ContsantsManager.STATUS_FON_DEFAULT);
+            mHandler.sendEmptyMessage(ConstantsManager.STATUS_FON_DEFAULT);
         }
     };
 
@@ -230,10 +230,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showScore(int value) {
         switch (value) {
-            case ContsantsManager.SHOW_SCORE:
+            case ConstantsManager.SHOW_SCORE:
                 mTvScore.setText("Score : " + String.valueOf(mScore));
                 break;
-            case ContsantsManager.SHOW_LIFE:
+            case ConstantsManager.SHOW_LIFE:
                 mTvLife.setText("Life : " + String.valueOf(mLife));
         }
     }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.junior.dwan.remembernumbers.R;
 import com.junior.dwan.remembernumbers.data.managers.DataManager;
-import com.junior.dwan.remembernumbers.utils.ContsantsManager;
+import com.junior.dwan.remembernumbers.utils.ConstantsManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +40,7 @@ public class GameFinishActivity extends AppCompatActivity implements View.OnClic
 
     private void showScore() {
         Intent getScore = getIntent();
-        int score = getScore.getIntExtra(ContsantsManager.EXTRA_SCORE, 0);
+        int score = getScore.getIntExtra(ConstantsManager.EXTRA_SCORE, 0);
         int highScore = DataManager.get(this).getPreferencesManager().loadHighScore();
         if (score > highScore) {
             highScore = score;
