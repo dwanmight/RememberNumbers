@@ -17,8 +17,8 @@ public class RandomNumbers {
 
 
     public int getRandom3X(int minimum, int maximum) {
-        maximum = 1000;
-        minimum = 100;
+//        maximum = 1000;
+//        minimum = 100;
         int randomNum = mRandom.nextInt((maximum - minimum) + 1) + minimum;
 
         return randomNum;

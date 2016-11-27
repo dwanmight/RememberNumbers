@@ -53,11 +53,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private RandomNumbers mRandomNumbers;
     private DataManager mDataManager;
-    private int mScore;
-    private int mLife;
     private Handler mHandler;
     private JumpingBeans mJumpingBeans;
     private ArrayList<Button> mListNumberButtons;
+    private int mLife;
+    private int mScore;
+    private int minimumRandom;
+    private int maximumRandom;
+    private int mCorrectAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mDataManager = DataManager.get(this);
         mScore = mDataManager.getScore();
         mLife = mDataManager.getLife();
+        mRandomNumbers = new RandomNumbers();
+        mCorrectAnswer=0;
+        minimumRandom=10;
+        maximumRandom=100;
         showScore(ConstantsManager.SHOW_SCORE);
         showScore(ConstantsManager.SHOW_LIFE);
         setTypeFacesAndListener();
@@ -74,7 +81,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         initStartGame();
         startHandler();
         isEnterModeEnabled(false);
-        mRandomNumbers = new RandomNumbers();
 
     }
 
@@ -92,6 +98,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case ConstantsManager.STATUS_FON_DEFAULT:
                         mFoneLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                        break;
                 }
             }
         };
@@ -142,7 +149,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 mTextAnswer.setText("");
                 break;
             case R.id.btnOk:
-                Log.i("TAGTAG", mDataManager.getQuestion() + " result");
                 checkCorrectResult();
                 break;
             case R.id.tap_to_start_textView:
@@ -157,9 +163,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             String result = mTextAnswer.getText().toString();
             if (result.equals(mDataManager.getQuestion())) {
                 mFoneLayout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-                mScore = GameUtils.checkResults(true, mScore);
+                if(mCorrectAnswer%3==0){
+                    mScore=mScore+10;
+                }
+                mScore++;
+                mCorrectAnswer++;
                 showScore(ConstantsManager.SHOW_SCORE);
-                Log.i("TAGTAG", mDataManager.getQuestion() + " true");
                 mHandler.sendEmptyMessage(ConstantsManager.STATUS_VISIBLE);
 
             } else {
@@ -172,7 +181,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     finish();
                 }
                 mHandler.sendEmptyMessage(ConstantsManager.STATUS_VISIBLE);
-                Log.i("TAGTAG", mDataManager.getQuestion() + " false");
             }
             Thread thread = new Thread(mChangeFonRunnable);
             thread.start();
@@ -182,9 +190,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateQuestion() {
-        int intRandom = mRandomNumbers.getRandom3X(100, 1000);
+        if( mCorrectAnswer>0 &&mCorrectAnswer%3==0){
+            minimumRandom=minimumRandom*10;
+            maximumRandom=maximumRandom*10;
+        }
+        int intRandom = mRandomNumbers.getRandom3X(minimumRandom, maximumRandom);
         mDataManager.setQuestion(intRandom);
-        Log.i("TAGTAG", mDataManager.getQuestion() + " random");
         mTextQuestion.setText(mDataManager.getQuestion());
         mTextAnswer.setText("");
         Thread t = new Thread(showRandomRunable);
@@ -207,7 +218,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Runnable showRandomRunable = new Runnable() {
         @Override
         public void run() {
-            waitTime(1000);
+            waitTime(1500);
             mHandler.sendEmptyMessage(ConstantsManager.STATUS_HIDE);
         }
     };
@@ -231,10 +242,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void showScore(int value) {
         switch (value) {
             case ConstantsManager.SHOW_SCORE:
-                mTvScore.setText("Score : " + String.valueOf(mScore));
+                mTvScore.setText(getString(R.string.game_current_score,String.valueOf(mScore)));
                 break;
             case ConstantsManager.SHOW_LIFE:
-                mTvLife.setText("Life : " + String.valueOf(mLife));
+                mTvLife.setText(getString(R.string.game_current_life,String.valueOf(mLife)));
         }
     }
 
@@ -246,8 +257,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             mBtnClear.setEnabled(true);
             mTableLayout.setEnabled(true);
             if (mListNumberButtons.size() > 0) {
-                for (Button btnBumber : mListNumberButtons)
-                    btnBumber.setEnabled(true);
+                for (Button btnNumber : mListNumberButtons)
+                    btnNumber.setEnabled(true);
             }
         } else {
             mTextQuestion.setVisibility(View.VISIBLE);
@@ -257,8 +268,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             mBtnClear.setEnabled(false);
             mTableLayout.setEnabled(false);
             if (mListNumberButtons.size() > 0) {
-                for (Button btnBumber : mListNumberButtons)
-                    btnBumber.setEnabled(false);
+                for (Button btnNumber : mListNumberButtons)
+                    btnNumber.setEnabled(false);
             }
         }
     }
