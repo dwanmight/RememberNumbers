@@ -146,7 +146,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 updateQuestion();
                 break;
             case R.id.btnClear:
-                mTextAnswer.setText("");
+//                mTextAnswer.setText("");
+                String answer=mTextAnswer.getText().toString();
+                if(answer.length()>0){
+                    answer=answer.substring(0,answer.length()-1);
+                    mTextAnswer.setText(answer);
+                } else return;
                 break;
             case R.id.btnOk:
                 checkCorrectResult();
