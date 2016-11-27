@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.junior.dwan.remembernumbers.R;
 import com.junior.dwan.remembernumbers.data.managers.DataManager;
@@ -47,6 +48,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     TextView tvTapToStart;
     @BindView(R.id.layout_tap_to_start)
     FrameLayout mStartLayout;
+    @BindView(R.id.game_fon_layout)
+    FrameLayout mFoneLayout;
 
     private RandomNumbers mRandomNumbers;
     private DataManager mDataManager;
@@ -66,8 +69,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mLife = mDataManager.getLife();
         showScore(ContsantsManager.SHOW_SCORE);
         showScore(ContsantsManager.SHOW_LIFE);
-        setTypeFaces();
-        setListener();
+        setTypeFacesAndListener();
         initNumberButtons();
         initStartGame();
         startHandler();
@@ -83,28 +85,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 switch (msg.what) {
                     case ContsantsManager.STATUS_HIDE:
                         isEnterModeEnabled(true);
-                        mTextQuestion.setVisibility(View.GONE);
-                        mTextAnswer.setVisibility(View.VISIBLE);
                         break;
                     case ContsantsManager.STATUS_VISIBLE:
                         isEnterModeEnabled(false);
-                        mTextQuestion.setVisibility(View.VISIBLE);
-                        mTextAnswer.setVisibility(View.GONE);
-                        mTextQuestion.setText("");
                         updateQuestion();
                         break;
+                    case ContsantsManager.STATUS_FON_DEFAULT:
+                        mFoneLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 }
             }
         };
     }
 
-    private void setTypeFaces() {
+    private void setTypeFacesAndListener() {
         mBtnClear.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
         mBtnok.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
         mTextAnswer.setTypeface(Typeface.createFromAsset(getAssets(), "musseo.otf"));
-    }
-
-    private void setListener() {
         mTextQuestion.setOnClickListener(this);
         mBtnClear.setOnClickListener(this);
         mBtnok.setOnClickListener(this);
@@ -157,23 +153,32 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void checkCorrectResult() {
-        String result = mTextAnswer.getText().toString();
-        if (result.equals(mDataManager.getQuestion())) {
-            mScore = GameUtils.checkResults(true, mScore);
-            showScore(ContsantsManager.SHOW_SCORE);
-            mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
-            Log.i("TAGTAG", mDataManager.getQuestion() + " true");
-        } else {
-            mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
-            if (GameUtils.checkForGameOver(mLife)) {
-                mLife = GameUtils.checkLife(true, mLife);
-                showScore(ContsantsManager.SHOW_LIFE);
+        if (mTextAnswer.getText().length() != 0) {
+            String result = mTextAnswer.getText().toString();
+            if (result.equals(mDataManager.getQuestion())) {
+                mFoneLayout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                mScore = GameUtils.checkResults(true, mScore);
+                showScore(ContsantsManager.SHOW_SCORE);
+                Log.i("TAGTAG", mDataManager.getQuestion() + " true");
+                mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
+
             } else {
-                startFinishActivity();
-                finish();
+                if (GameUtils.checkForGameOver(mLife)) {
+                    mFoneLayout.setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    mLife = GameUtils.checkLife(true, mLife);
+                    showScore(ContsantsManager.SHOW_LIFE);
+                } else {
+                    startFinishActivity();
+                    finish();
+                }
+                mHandler.sendEmptyMessage(ContsantsManager.STATUS_VISIBLE);
+                Log.i("TAGTAG", mDataManager.getQuestion() + " false");
             }
-            Log.i("TAGTAG", mDataManager.getQuestion() + " false");
-        }
+            Thread thread = new Thread(mChangeFonRunnable);
+            thread.start();
+        } else
+            Toast.makeText(GameActivity.this, "Enter the number!", Toast.LENGTH_LONG).show();
+
     }
 
     private void updateQuestion() {
@@ -182,7 +187,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Log.i("TAGTAG", mDataManager.getQuestion() + " random");
         mTextQuestion.setText(mDataManager.getQuestion());
         mTextAnswer.setText("");
-        Thread t = new Thread(mRunnable);
+        Thread t = new Thread(showRandomRunable);
         t.start();
     }
 
@@ -199,17 +204,25 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-    Runnable mRunnable = new Runnable() {
+    Runnable showRandomRunable = new Runnable() {
         @Override
         public void run() {
-            waitTime();
+            waitTime(1000);
             mHandler.sendEmptyMessage(ContsantsManager.STATUS_HIDE);
         }
     };
 
-    private void waitTime() {
+    Runnable mChangeFonRunnable = new Runnable() {
+        @Override
+        public void run() {
+            waitTime(300);
+            mHandler.sendEmptyMessage(ContsantsManager.STATUS_FON_DEFAULT);
+        }
+    };
+
+    private void waitTime(long time) {
         try {
-            TimeUnit.MILLISECONDS.sleep(1000);
+            TimeUnit.MILLISECONDS.sleep(time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -227,6 +240,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     private void isEnterModeEnabled(boolean isEnabled) {
         if (isEnabled) {
+            mTextQuestion.setVisibility(View.GONE);
+            mTextAnswer.setVisibility(View.VISIBLE);
             mBtnok.setEnabled(true);
             mBtnClear.setEnabled(true);
             mTableLayout.setEnabled(true);
@@ -235,6 +250,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     btnBumber.setEnabled(true);
             }
         } else {
+            mTextQuestion.setVisibility(View.VISIBLE);
+            mTextAnswer.setVisibility(View.GONE);
+            mTextQuestion.setText("");
             mBtnok.setEnabled(false);
             mBtnClear.setEnabled(false);
             mTableLayout.setEnabled(false);
