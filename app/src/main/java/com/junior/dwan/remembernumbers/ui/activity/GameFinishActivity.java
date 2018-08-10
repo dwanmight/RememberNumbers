@@ -41,14 +41,15 @@ public class GameFinishActivity extends AppCompatActivity implements View.OnClic
     private void showScore() {
         Intent getScore = getIntent();
         int score = getScore.getIntExtra(ConstantsManager.EXTRA_SCORE, 0);
-        int highScore = DataManager.get(this).getPreferencesManager().loadHighScore();
-        if (score > highScore) {
-            highScore = score;
-            DataManager.get(this).getPreferencesManager().saveHighScore(highScore);
-        }
+        // TODO: 8/10/2018
+//        int highScore = DataManager.get(this).getPreferencesManager().loadHighScore();
+//        if (score > highScore) {
+//            highScore = score;
+//            DataManager.get(this).getPreferencesManager().saveHighScore(highScore);
+//        }
 
-        tvScore.setText(getString(R.string.score_is, String.valueOf(score)));
-        tvHighScore.setText(getString(R.string.highscore_is, String.valueOf(highScore)));
+//        tvScore.setText(getString(R.string.score_is, String.valueOf(score)));
+//        tvHighScore.setText(getString(R.string.highscore_is, String.valueOf(highScore)));
 
     }
 

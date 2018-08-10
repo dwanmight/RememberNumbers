@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp">
+
+    <ImageView
+        android:id="@+id/cloud_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_cloud" />
+
+    <TextView
+        android:id="@+id/tv_score"
+        style="@style/textView_score"
+        android:layout_gravity="top|left"
+        android:layout_marginLeft="56dp"
+        android:hint="@string/score" />
+
+    <TextView
+        android:id="@+id/tv_life"
+        style="@style/textView_score"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="56dp"
+        android:hint="@string/life" />
+
+    <TextView
+        android:id="@+id/tv_question"
+        style="@style/cloud_textView"
+        android:hint="@string/cloud_question_text" />
+
+    <TextView
+        android:id="@+id/tv_answer"
+        style="@style/cloud_textView"
+        android:hint="@string/enter_you_number"
+        android:visibility="gone" />
+</FrameLayout>

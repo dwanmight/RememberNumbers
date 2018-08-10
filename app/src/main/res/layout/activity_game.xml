@@ -1,75 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/pineapplecut"
-    android:layout_height="match_parent">
-    <FrameLayout android:layout_width="match_parent"
-                 android:id="@+id/game_fon_layout"
-                 android:alpha="0.3"
-                 android:layout_height="match_parent">
-    </FrameLayout>
-    <LinearLayout
-        android:focusable="false"
-        android:id="@+id/activity_game"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_pineapplecut">
+
+    <FrameLayout
+        android:id="@+id/answer_indicator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:alpha="0.3" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="false"
         android:orientation="vertical"
-        android:paddingTop="16dp"
-        android:weightSum="8"
-        tools:context="com.junior.dwan.remembernumbers.ui.activity.GameActivity">
-        <FrameLayout android:layout_width="match_parent"
-                     android:layout_height="0dp"
-                     android:layout_weight="3"
-                     android:paddingLeft="32dp"
-                     android:paddingRight="32dp">
-            <ImageView
-                android:id="@+id/cloud_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/cloud1"/>
-            <TextView android:id="@+id/tv_score"
-                      style="@style/textView_score"
-                      android:layout_gravity="top|left"
-                      android:layout_marginLeft="56dp"
-                      android:hint="@string/score"/>
-            <TextView android:id="@+id/tv_life"
-                      style="@style/textView_score"
-                      android:layout_gravity="top|right"
-                      android:layout_marginRight="56dp"
-                      android:hint="@string/life"/>
-            <TextView android:id="@+id/tv_question"
-                      android:hint="Remember the number"
-                      style="@style/cloud_textView"/>
-            <TextView android:id="@+id/tv_answer"
-                      style="@style/cloud_textView"
-                      android:hint="@string/enter_you_number"
-                      android:visibility="gone"/>
-        </FrameLayout>
-        <RelativeLayout android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="5">
-            <Button android:id="@+id/btnClear"
-                    style="@style/btn_clear_and_ok"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/clear"/>
-            <Button android:id="@+id/btnOk"
-                    style="@style/btn_clear_and_ok"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/ok"/>
-            <ImageView
-                android:id="@+id/man1_main"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/man2"/>
-        </RelativeLayout>
-        <include layout="@layout/in_number_button"/>
+        android:weightSum="8">
+
+        <include
+            layout="@layout/include_question_board_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_vertical_8"
+            android:layout_weight="3" />
+
+        <include layout="@layout/control_panel" />
+
+        <include layout="@layout/in_number_button" />
     </LinearLayout>
+
     <include
-        android:visibility="visible"
         android:id="@+id/layout_tap_to_start"
-        layout="@layout/in_start_game"/>
+        layout="@layout/in_start_game"
+        android:visibility="visible" />
 </FrameLayout>

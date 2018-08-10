@@ -4,7 +4,7 @@
     <item
         android:drawable="@color/colorSplash"/>
     <item>
-        <bitmap android:src="@drawable/ic_mind"
+        <bitmap android:src="@drawable/img_mind"
                 android:gravity="center"/>
     </item>
 </layer-list>

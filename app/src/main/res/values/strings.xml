@@ -11,4 +11,5 @@
     <string name="highscore_is">Highscore : %1$s</string>
     <string name="game_current_score">"Score : %1$s "</string>
     <string name="game_current_life">"Life : %1$s "</string>
+    <string name="cloud_question_text">Remember the number</string>
 </resources>

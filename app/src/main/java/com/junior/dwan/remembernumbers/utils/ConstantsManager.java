@@ -10,10 +10,6 @@ public interface ConstantsManager {
     int STATUS_VISIBLE = 1;
     int STATUS_FON_DEFAULT = 2;
 
-    //show score or life
-    int SHOW_SCORE = 10;
-    int SHOW_LIFE = 20;
-
     //intent extxras
     String EXTRA_SCORE = "EXTRA_SCORE";
 

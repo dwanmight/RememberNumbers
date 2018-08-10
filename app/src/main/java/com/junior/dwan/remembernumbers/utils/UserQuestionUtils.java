@@ -11,17 +11,16 @@ public class UserQuestionUtils {
     private int mLife;
 
     public UserQuestionUtils() {
-        mLife=3;
-        mScore=0;
+        mLife = 3;
+        mScore = 0;
     }
 
 
     public void setTextQuestion(int textQuestion) {
-        mTextQuestion = textQuestion + "";
+        mTextQuestion = String.valueOf(textQuestion);
     }
 
     public String getTextQuestion() {
-
         return mTextQuestion;
     }
 

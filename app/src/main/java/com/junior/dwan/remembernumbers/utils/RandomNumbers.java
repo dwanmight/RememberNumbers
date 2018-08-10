@@ -7,20 +7,13 @@ import java.util.Random;
  */
 
 public class RandomNumbers {
-
     private Random mRandom;
 
     public RandomNumbers() {
         mRandom = new Random();
-
     }
 
-
     public int getRandom3X(int minimum, int maximum) {
-//        maximum = 1000;
-//        minimum = 100;
-        int randomNum = mRandom.nextInt((maximum - minimum) + 1) + minimum;
-
-        return randomNum;
+        return mRandom.nextInt((maximum - minimum) + 1) + minimum;
     }
 }

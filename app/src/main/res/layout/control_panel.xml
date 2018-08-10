@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="5">
+
+    <Button
+        android:id="@+id/clear_btn"
+        style="@style/btn_clear_and_ok"
+        android:layout_gravity="left"
+        android:text="@string/clear" />
+
+    <Button
+        android:id="@+id/ok_btn"
+        style="@style/btn_clear_and_ok"
+        android:layout_gravity="right"
+        android:text="@string/ok" />
+
+    <ImageView
+        android:id="@+id/man_img"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/img_man" />
+</FrameLayout>

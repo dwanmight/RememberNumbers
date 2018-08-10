@@ -10,15 +10,14 @@ import com.junior.dwan.remembernumbers.utils.UserQuestionUtils;
 
 public class DataManager {
 
-    private PreferencesManager mPreferencesManager;
     private static DataManager sDataManager;
     private Context mContext;
-    UserQuestionUtils mUserQuestionUtils;
+    private UserQuestionUtils mUserQuestionUtils;
 
     private DataManager(Context context) {
+        this.mContext = context.getApplicationContext();
+
         this.mUserQuestionUtils = new UserQuestionUtils();
-        this.mContext = context;
-        this.mPreferencesManager = new PreferencesManager();
     }
 
     public static DataManager get(Context c) {
@@ -26,10 +25,6 @@ public class DataManager {
             sDataManager = new DataManager(c.getApplicationContext());
         }
         return sDataManager;
-    }
-
-    public PreferencesManager getPreferencesManager() {
-        return mPreferencesManager;
     }
 
     public void setQuestion(int question) {
