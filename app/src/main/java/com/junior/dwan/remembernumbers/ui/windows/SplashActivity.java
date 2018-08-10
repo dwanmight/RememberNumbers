@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goToGame() {
-        IntentUtils.startFinish(this,32);
+        IntentUtils.startGame(this);
         finish();
     }
 }
