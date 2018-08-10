@@ -30,7 +30,6 @@
     </LinearLayout>
 
     <include
-        android:id="@+id/layout_tap_to_start"
         layout="@layout/in_start_game"
         android:visibility="visible" />
 </FrameLayout>

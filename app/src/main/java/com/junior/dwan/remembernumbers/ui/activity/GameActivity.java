@@ -46,8 +46,6 @@ public class GameActivity extends BaseActivity {
     TextView mLifeTv;
     @BindView(R.id.tap_to_start_tv)
     TextView mTapToStartTv;
-    @BindView(R.id.layout_tap_to_start)
-    FrameLayout mStartLayout;
     @BindView(R.id.answer_indicator_layout)
     FrameLayout mBgLayout;
 
@@ -177,7 +175,7 @@ public class GameActivity extends BaseActivity {
 
     @OnClick(R.id.tap_to_start_tv)
     public void clickTapToStart() {
-        mStartLayout.setVisibility(View.GONE);
+        mTapToStartTv.setVisibility(View.GONE);
         mJumpingBeans.stopJumping();
         updateQuestion();
     }

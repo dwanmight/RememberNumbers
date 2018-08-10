@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.6"
-        android:background="@color/colorGrey" />
-
-    <TextView
-        android:id="@+id/tap_to_start_tv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/tap_to_start_text"
-        android:textColor="@color/colorBlack"
-        android:textSize="56sp" />
-</merge>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tap_to_start_tv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGreyTransparency"
+    android:gravity="center"
+    android:text="@string/tap_to_start_text"
+    android:textColor="@color/colorBlack"
+    android:textSize="56sp" />
