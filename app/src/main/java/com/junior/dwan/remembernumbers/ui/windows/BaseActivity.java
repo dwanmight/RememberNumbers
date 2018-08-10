@@ -1,4 +1,4 @@
-package com.junior.dwan.remembernumbers.ui.activity;
+package com.junior.dwan.remembernumbers.ui.windows;
 
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import dagger.android.AndroidInjection;
 
-abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +30,11 @@ abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * bool variable for injecting activity
+     *
+     * @return true if need inject current activity
+     */
     protected boolean isNeedInject() {
         return false;
     }
@@ -49,7 +54,7 @@ abstract class BaseActivity extends AppCompatActivity {
      */
 
     @LayoutRes
-    abstract int getRootId();
+    public abstract int getRootId();
 
     /**
      * init data for activity
@@ -72,11 +77,21 @@ abstract class BaseActivity extends AppCompatActivity {
     protected void setupUI(@Nullable Bundle savedInstanceState) {
     }
 
-
+    /**
+     * method for show toast with string resources
+     *
+     * @param res of string for show
+     * @see #showToast(String)
+     */
     protected void showToast(@StringRes int res) {
         this.showToast(getString(res));
     }
 
+    /**
+     * method for show toast with string
+     *
+     * @param message for showing
+     */
     protected void showToast(String message) {
         if (TextUtils.isEmpty(message)) return;
         if (isFinishing()) return;
@@ -91,6 +106,12 @@ abstract class BaseActivity extends AppCompatActivity {
         setListeners(true);
     }
 
+
+    /**
+     * method for bind listeners and release it
+     *
+     * @param enable
+     */
     protected void setListeners(boolean enable) {
     }
 

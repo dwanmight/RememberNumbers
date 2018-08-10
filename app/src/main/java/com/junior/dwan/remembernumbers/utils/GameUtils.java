@@ -1,12 +1,7 @@
 package com.junior.dwan.remembernumbers.utils;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.junior.dwan.remembernumbers.R;
-import com.junior.dwan.remembernumbers.ui.activity.GameActivity;
 
 /**
  * Created by Might on 25.11.2016.

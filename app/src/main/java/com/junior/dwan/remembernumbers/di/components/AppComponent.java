@@ -6,8 +6,8 @@ import com.junior.dwan.remembernumbers.di.modules.PreferencesModule;
 
 import dagger.Component;
 
-@Component(modules = {PreferencesModule.class, ActivityModule.class})
+//@Component(modules = {PreferencesModule.class, ActivityModule.class})
 public interface AppComponent {
 
-    void inject(App application);
+//    void inject(App application);
 }

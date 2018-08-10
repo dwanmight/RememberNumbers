@@ -1,4 +1,4 @@
-package com.junior.dwan.remembernumbers.ui.activity;
+package com.junior.dwan.remembernumbers.ui.windows;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -80,7 +80,7 @@ public class GameActivity extends BaseActivity {
     private int maximumRandom;
 
     @Override
-    int getRootId() {
+    public int getRootId() {
         return R.layout.activity_game;
     }
 
@@ -199,6 +199,7 @@ public class GameActivity extends BaseActivity {
                     mGameInfo.setLifesCount(GameUtils.checkLife(true, mGameInfo.getLifeCount()));
                     updateLifeText();
                 } else {
+                    mHandler.removeCallbacksAndMessages(null);
                     goToFinishActivity();
                 }
                 mHandler.sendEmptyMessage(ConstantsManager.STATUS_VISIBLE);
