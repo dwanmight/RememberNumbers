@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 public class GameUtils {
 
-    public static void streamNumbersPanel(TextView tvAnswer, View v) {
+    public static void streamNumbersPanel(TextView answerTv, View v) {
         TextView textView = (TextView) v;
-        String working = tvAnswer.getText().toString();
+        String answer = answerTv.getText().toString();
         String text = textView.getText().toString();
-        if (working.equals("0")) {
-            tvAnswer.setText(text);
+        if (answer.equals("0")) {
+            answerTv.setText(text);
         } else
-            tvAnswer.setText(working + text);
+            answerTv.setText(answer + text);
     }
 
 

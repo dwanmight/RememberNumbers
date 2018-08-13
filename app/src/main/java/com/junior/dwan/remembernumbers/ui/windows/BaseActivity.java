@@ -59,7 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * init data for activity
      *
-     * @param savedInstanceState
+     * @param savedInstanceState bundle with restored data
      */
     protected void initData(Bundle savedInstanceState) {
 
@@ -120,5 +120,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         setListeners(false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        releaseData();
+    }
+
+    /**
+     * release your activity data in this method
+     */
+    protected void releaseData() {
+
     }
 }

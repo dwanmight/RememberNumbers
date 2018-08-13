@@ -1,9 +1,11 @@
-package com.junior.dwan.remembernumbers.ui.windows;
+package com.junior.dwan.remembernumbers.ui.windows.game;
 
+import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
@@ -15,10 +17,12 @@ import android.widget.TextView;
 import com.junior.dwan.remembernumbers.R;
 import com.junior.dwan.remembernumbers.data.managers.DataManager;
 import com.junior.dwan.remembernumbers.data.models.GameInfo;
+import com.junior.dwan.remembernumbers.ui.windows.BaseActivity;
 import com.junior.dwan.remembernumbers.utils.ConstantsManager;
 import com.junior.dwan.remembernumbers.utils.GameUtils;
 import com.junior.dwan.remembernumbers.utils.IntentUtils;
 import com.junior.dwan.remembernumbers.utils.RandomNumbers;
+import com.junior.dwan.remembernumbers.utils.TextViewUtils;
 
 import net.frakbot.jumpingbeans.JumpingBeans;
 
@@ -54,6 +58,7 @@ public class GameActivity extends BaseActivity {
     private GameInfo mGameInfo;
     private Typeface mFontTypeFace;
 
+    @SuppressLint("HandlerLeak")
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -79,6 +84,7 @@ public class GameActivity extends BaseActivity {
     private int minimumRandom;
     private int maximumRandom;
 
+    @LayoutRes
     @Override
     public int getRootId() {
         return R.layout.activity_game;
@@ -149,7 +155,7 @@ public class GameActivity extends BaseActivity {
         if (btn == null) return;
         btn.setText(number);
         btn.setTypeface(mFontTypeFace);
-        btn.setOnClickListener(numberButtonListener);
+        btn.setOnClickListener(v -> GameUtils.streamNumbersPanel(mAnswerTv, v));
         mListNumberButtons.add(btn);
     }
 
@@ -181,33 +187,34 @@ public class GameActivity extends BaseActivity {
     }
 
     private void checkCorrectResult() {
-        if (mAnswerTv.getText().length() != 0) {
-            String result = mAnswerTv.getText().toString();
-            if (result.equals(mDataManager.getQuestion())) {
-                mBgLayout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-                if (mGameInfo.getCorrectAnswersCount() % 3 == 0) {
+        if (TextViewUtils.isEmpty(mAnswerTv)) {
+            showToast(R.string.enter_the_number);
+            return;
+        }
+
+        String answer = TextViewUtils.getText(mAnswerTv);
+        if (answer.equals(mDataManager.getQuestion())) {
+            mBgLayout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+            if (mGameInfo.getCorrectAnswersCount() % 3 == 0) {
 //                    mScoreCount = mScoreCount + 10;
-                }
-                mGameInfo.incrementScore();
-                mGameInfo.incrementCorrectAnswers();
-                updateScoreText();
-                mHandler.sendEmptyMessage(ConstantsManager.STATUS_VISIBLE);
-
-            } else {
-                if (GameUtils.checkForGameOver(mGameInfo.getLifeCount())) {
-                    mBgLayout.setBackgroundColor(getResources().getColor(R.color.colorRed));
-                    mGameInfo.setLifesCount(GameUtils.checkLife(true, mGameInfo.getLifeCount()));
-                    updateLifeText();
-                } else {
-                    mHandler.removeCallbacksAndMessages(null);
-                    goToFinishActivity();
-                }
-                mHandler.sendEmptyMessage(ConstantsManager.STATUS_VISIBLE);
             }
-            mHandler.postDelayed(() -> mHandler.sendEmptyMessage(ConstantsManager.STATUS_FON_DEFAULT), 300);
-        } else
-            showToast("Enter the number!");
+            mGameInfo.incrementScore();
+            mGameInfo.incrementCorrectAnswers();
+            updateScoreText();
+            mHandler.sendEmptyMessage(ConstantsManager.STATUS_VISIBLE);
 
+        } else {
+            if (GameUtils.checkForGameOver(mGameInfo.getLifeCount())) {
+                mBgLayout.setBackgroundColor(getResources().getColor(R.color.colorRed));
+                mGameInfo.setLifesCount(GameUtils.checkLife(true, mGameInfo.getLifeCount()));
+                updateLifeText();
+            } else {
+                clearHandler();
+                goToFinishActivity();
+            }
+            mHandler.sendEmptyMessage(ConstantsManager.STATUS_VISIBLE);
+        }
+        mHandler.postDelayed(() -> mHandler.sendEmptyMessage(ConstantsManager.STATUS_FON_DEFAULT), 300);
     }
 
     private void updateQuestion() {
@@ -227,15 +234,8 @@ public class GameActivity extends BaseActivity {
         finish();
     }
 
-    View.OnClickListener numberButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            GameUtils.streamNumbersPanel(mAnswerTv, v);
-        }
-    };
-
-    private void isEnterModeEnabled(boolean enabled) {
-        if (enabled) {
+    private void isEnterModeEnabled(boolean enabledEnterMode) {
+        if (enabledEnterMode) {
             mQuestionTv.setVisibility(View.GONE);
             mAnswerTv.setVisibility(View.VISIBLE);
             mOkBtn.setEnabled(true);
@@ -258,4 +258,13 @@ public class GameActivity extends BaseActivity {
                 .build();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        clearHandler();
+    }
+
+    private void clearHandler() {
+        mHandler.removeCallbacksAndMessages(null);
+    }
 }

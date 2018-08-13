@@ -3,7 +3,7 @@ package com.junior.dwan.remembernumbers.utils;
 import android.content.Context;
 import android.content.Intent;
 
-import com.junior.dwan.remembernumbers.ui.windows.GameActivity;
+import com.junior.dwan.remembernumbers.ui.windows.game.GameActivity;
 import com.junior.dwan.remembernumbers.ui.windows.finish.GameFinishActivity;
 
 public class IntentUtils {
