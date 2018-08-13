@@ -26,8 +26,6 @@ import com.junior.dwan.remembernumbers.utils.TextViewUtils;
 
 import net.frakbot.jumpingbeans.JumpingBeans;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -79,8 +77,6 @@ public class GameActivity extends BaseActivity {
 
     private JumpingBeans mJumpingBeans;
 
-    private ArrayList<Button> mListNumberButtons;
-
     private int minimumRandom;
     private int maximumRandom;
 
@@ -131,13 +127,11 @@ public class GameActivity extends BaseActivity {
         Button btn;
         TableRow tableRow;
 
-        mListNumberButtons = new ArrayList<>();
-
         for (int i = 0; i < mTableLayout.getChildCount(); i++) {
             tableRow = (TableRow) mTableLayout.getChildAt(i);
             for (int j = 0; j < tableRow.getChildCount(); j++) {
                 btn = (Button) tableRow.getChildAt(j);
-                setupNumberBtnAndAddToList(btn, String.valueOf(number));
+                setupNumberBtnAndSetListener(btn, String.valueOf(number));
                 number++;
             }
         }
@@ -148,15 +142,14 @@ public class GameActivity extends BaseActivity {
         int indexRowLastEl = tableRow.getChildCount() - 1;
 
         btn = (Button) tableRow.getChildAt(indexRowLastEl);
-        setupNumberBtnAndAddToList(btn, "0");
+        setupNumberBtnAndSetListener(btn, "0");
     }
 
-    private void setupNumberBtnAndAddToList(Button btn, String number) {
+    private void setupNumberBtnAndSetListener(Button btn, String number) {
         if (btn == null) return;
         btn.setText(number);
         btn.setTypeface(mFontTypeFace);
         btn.setOnClickListener(v -> GameUtils.streamNumbersPanel(mAnswerTv, v));
-        mListNumberButtons.add(btn);
     }
 
 
