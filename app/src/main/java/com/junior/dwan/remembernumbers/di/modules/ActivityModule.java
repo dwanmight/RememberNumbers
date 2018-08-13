@@ -1,7 +1,7 @@
 package com.junior.dwan.remembernumbers.di.modules;
 
 import com.junior.dwan.remembernumbers.ui.windows.GameActivity;
-import com.junior.dwan.remembernumbers.ui.windows.finish.ui.GameFinishActivity;
+import com.junior.dwan.remembernumbers.ui.windows.finish.GameFinishActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

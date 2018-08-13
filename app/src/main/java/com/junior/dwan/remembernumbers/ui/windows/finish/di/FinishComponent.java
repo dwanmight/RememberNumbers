@@ -1,7 +1,7 @@
 package com.junior.dwan.remembernumbers.ui.windows.finish.di;
 
 import com.junior.dwan.remembernumbers.di.components.AppComponentV2;
-import com.junior.dwan.remembernumbers.ui.windows.finish.ui.GameFinishActivity;
+import com.junior.dwan.remembernumbers.ui.windows.finish.GameFinishActivity;
 
 import dagger.Component;
 

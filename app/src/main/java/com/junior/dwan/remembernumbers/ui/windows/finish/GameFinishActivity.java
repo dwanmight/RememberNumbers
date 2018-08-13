@@ -1,4 +1,4 @@
-package com.junior.dwan.remembernumbers.ui.windows.finish.ui;
+package com.junior.dwan.remembernumbers.ui.windows.finish;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +32,11 @@ public class GameFinishActivity extends BaseActivity {
     TextView tvScore;
     @BindView(R.id.finish_highScore)
     TextView tvHighScore;
+
+    @OnClick(R.id.finish_start_new_game)
+    public void clickStartNewGame() {
+        goToGame();
+    }
 
     @Inject
     PreferencesManager mPreferencesManager;
@@ -76,11 +81,6 @@ public class GameFinishActivity extends BaseActivity {
             highScore = score;
             mPreferencesManager.saveHighScore(highScore);
         }
-    }
-
-    @OnClick(R.id.finish_start_new_game)
-    public void clickStartNewGame() {
-        goToGame();
     }
 
     private void goToGame() {

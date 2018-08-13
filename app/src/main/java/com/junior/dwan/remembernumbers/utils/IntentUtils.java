@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.junior.dwan.remembernumbers.ui.windows.GameActivity;
-import com.junior.dwan.remembernumbers.ui.windows.finish.ui.GameFinishActivity;
+import com.junior.dwan.remembernumbers.ui.windows.finish.GameFinishActivity;
 
 public class IntentUtils {
 
